@@ -1,3 +1,10 @@
+window.addEventListener('load', () => {
+  if (!window.location.hash) {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }
+  document.body.classList.add('page-ready');
+});
+
 // Ripple effect for buttons
 document.querySelectorAll('.link-card, .cta-btn').forEach(el => {
   el.addEventListener('click', function(e) {
