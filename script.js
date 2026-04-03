@@ -45,10 +45,19 @@ const backToTopBtn = document.getElementById('backToTop');
 let ticking = false;
 
 function updateBackToTop() {
-  if (window.scrollY > 300) {
+  if (window.scrollY > 100) {
     backToTopBtn.classList.add('show');
   } else {
     backToTopBtn.classList.remove('show');
+  }
+  // Logo header visibility
+  const logo = document.querySelector('.logo');
+  if (logo && window.innerWidth > 768) {
+    if (window.scrollY > 150) {
+      logo.classList.remove('nav-hidden');
+    } else {
+      logo.classList.add('nav-hidden');
+    }
   }
   ticking = false;
 }
@@ -68,8 +77,8 @@ backToTopBtn.addEventListener('click', (e) => {
   });
 });
 
-// Smooth scroll for nav links
-document.querySelectorAll('.nav-link').forEach(link => {
+// Smooth scroll for nav links (fixed for #)
+document.querySelectorAll('.nav-link, .nav-item').forEach(link => {
   link.addEventListener('click', (e) => {
     e.preventDefault();
     const targetId = link.getAttribute('href');
@@ -80,8 +89,46 @@ document.querySelectorAll('.nav-link').forEach(link => {
         top: offsetTop,
         behavior: 'smooth'
       });
+    } else {
+      // Fallback to top if no target
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     }
   });
+});
+
+// Mobile menu toggle
+document.addEventListener('DOMContentLoaded', () => {
+  const menuToggle = document.getElementById('menu-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  const body = document.body;
+  const header = document.querySelector('.header');
+  
+  if (menuToggle && navLinks) {
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      navLinks.classList.toggle('active');
+      body.classList.toggle('nav-open');
+    });
+  }
+  
+  // Close menu on nav-item click
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+      navLinks.classList.remove('active');
+      body.classList.remove('nav-open');
+    });
+  });
+  
+// Close menu on outside click
+document.addEventListener('click', (e) => {
+  if (navLinks.classList.contains('active') && !header.contains(e.target)) {
+    navLinks.classList.remove('active');
+    body.classList.remove('nav-open');
+  }
+});
 });
 
 // ===== MODAL DIRECTIVA =====

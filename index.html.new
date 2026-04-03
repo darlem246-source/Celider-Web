@@ -8,27 +8,14 @@
 </head>
 <body>
 
-<!-- NEW MOBILE HEADER -->
-<header class="header">
-  <nav class="header-nav">
-    <a href="./index.html" class="logo nav-logo">
-      <img src="./IMG/image.png" alt="CELIDER Logo" height="40">
-    </a>
-    <button id="menu-toggle" aria-label="Abrir menú" class="menu-toggle">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-    <div class="nav-links">
-      <a href="#hero" class="nav-item">Inicio</a>
-      <a href="#convocatorias" class="nav-item">Convocatorias</a>
-      <a href="#directiva" class="nav-item">Directiva</a>
-      <a href="#secretarios" class="nav-item">Secretarios</a>
-      <a href="#quienes-somos" class="nav-item">¿Quiénes somos?</a>
-      <a href="#comisiones" class="nav-item">Comisiones</a>
-    </div>
-  </nav>
-</header>
+<!-- STICKY NAV -->
+<nav class="sticky-nav" role="navigation" aria-label="Navegación rápida">
+  <a href="#convocatorias" class="nav-link">Convocatorias</a>
+  <a href="#directiva" class="nav-link">Directiva</a>
+  <a href="#secretarios" class="nav-link">Secretarios</a>
+  <a href="#quienes-somos" class="nav-link">¿Quiénes somos?</a>
+  <a href="#comisiones" class="nav-link">Comisiones</a>
+</nav>
 
 <div class="bg-orbs">
   <div class="bg-image"></div>
@@ -40,7 +27,7 @@
 <div class="page">
 
   <!-- HERO -->
-  <div id="hero" class="hero full-col">
+  <div class="hero full-col">
     <div class="hero-avatar">
       <div class="avatar-ring"></div>
       <div class="avatar-inner">C</div>

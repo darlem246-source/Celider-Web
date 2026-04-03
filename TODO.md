@@ -1,8 +1,7 @@
-# TODO - Agregar Sección Secretarios
+# Navbar Mobile Plan Progress
 
-- [x] Explorar folder Secretarios (1)/ y PDF
-- [x] Copiar PNGs a IMG/
-- [ ] Editar directiva-data.js (agregar 3 miembros)
-- [ ] Editar index.html (insertar sección después directiva)
-- [ ] Test: start index.html, verificar modal/swipe
-- [ ] Completar task
+- [x] Logo confirmado: IMG/image.png
+- [x] Update index.html: Replace sticky-nav with <header> (logo left, hamburger right, nav-links div)
+- [x] Update style.css: header fixed thin blur, mobile media <768px drawer 70% right blue-dark cyan text
+- [x] Update script.js: Add #menu-toggle onclick toggle .nav-links.active
+- [ ] Test & complete
