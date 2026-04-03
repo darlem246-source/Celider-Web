@@ -3,7 +3,7 @@ const directivaData = [
   {
     name: 'Heidy Díaz',
     role: 'Presidenta',
-    img: './IMG/Heidy2.webp',
+    img: './IMG/Heidy.webp',
     details: [
       'Estudiante de Atención a Emergencias de la Salud en el Politécnico Ciudad del Conocimiento cursando 5to de Secundaria',
       'Egresada de MINUME XVI',
@@ -52,6 +52,40 @@ const directivaData = [
       'Egresada de MINUME XVI',
       'Egresada del TRD 2024',
       'Voluntaria desde 2026'
+    ]
+  },
+  {
+    name: 'Isaira C. Sebastián',
+    role: 'Secretaria General',
+    img: './IMG/isaira.webp',
+    details: [
+      'Voluntaria Nacional del PLERD',
+      'Egresada de MINUME (2023)',
+      'Estudiante de Arquitectura',
+      'Actividades nacionales: CND, MINUME y Senado Joven'
+    ]
+  },
+  {
+    name: 'Franchesca Genao',
+    role: 'Secretaria G. Académica',
+    img: './IMG/franchesca.webp',
+    details: [
+      'Egresada de MINUME XIV y CND III',
+      'Estudiante de Turismo',
+      'Presidenta del Celider 17-01',
+      'Secretaria de Capacitaciones (2024-2026)'
+    ]
+  },
+  {
+    name: 'Carlos Mejía',
+    role: 'Secretario G. Logístico',
+    img: './IMG/carlos.webp',
+    details: [
+      'Voluntario Nacional del PLERD',
+      'Estudiante de Derecho',
+      'Egresado de MINUME XIII',
+      'Secretario General del Celider 17 (2024-2026)',
+      'Secretario de Proyectos del Celider 17'
     ]
   }
 ];

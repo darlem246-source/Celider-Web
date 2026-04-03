@@ -6,7 +6,7 @@ window.addEventListener('load', () => {
 });
 
 // Ripple effect for buttons
-document.querySelectorAll('.link-card, .cta-btn').forEach(el => {
+document.querySelectorAll('.link-card, .cta-btn, .nav-link').forEach(el => {
   el.addEventListener('click', function(e) {
     if (!this.href || this.href === '#' || this.href.endsWith('#')) return;
     const r = document.createElement('span');
@@ -35,13 +35,56 @@ const obs = new IntersectionObserver(entries => {
   });
 }, { threshold: 0.1 });
 
-document.querySelectorAll('.hero,.stats,.section-title,.links-grid,.about-card,.req-card,.commissions-card,.cta-card,.footer').forEach(el => {
+document.querySelectorAll('.hero,.stats,.section-title,.links-grid,.about-card,.req-card,.commissions-card,.cta-card,.footer, .directiva-section').forEach(el => {
   el.style.animationPlayState = 'paused';
   obs.observe(el);
 });
 
+// ===== BACK TO TOP =====
+const backToTopBtn = document.getElementById('backToTop');
+let ticking = false;
+
+function updateBackToTop() {
+  if (window.scrollY > 300) {
+    backToTopBtn.classList.add('show');
+  } else {
+    backToTopBtn.classList.remove('show');
+  }
+  ticking = false;
+}
+
+window.addEventListener('scroll', () => {
+  if (!ticking) {
+    requestAnimationFrame(updateBackToTop);
+    ticking = true;
+  }
+});
+
+backToTopBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});
+
+// Smooth scroll for nav links
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const targetId = link.getAttribute('href');
+    const targetSection = document.querySelector(targetId);
+    if (targetSection) {
+      const offsetTop = targetSection.getBoundingClientRect().top + window.pageYOffset - 80;
+      window.scrollTo({
+        top: offsetTop,
+        behavior: 'smooth'
+      });
+    }
+  });
+});
+
 // ===== MODAL DIRECTIVA =====
-// directivaData is loaded from directiva-data.js (separation of content and structure)
 if (!window.directivaData) {
   console.warn('No se encontró directivaData.');
   window.directivaData = [];
@@ -49,44 +92,52 @@ if (!window.directivaData) {
 
 let currentMemberIndex = null;
 
-const cards = document.querySelectorAll('.directiva-card');
-cards.forEach(card => {
-  card.addEventListener('click', () => {
-    const memberId = parseInt(card.getAttribute('data-member'), 10);
-    openModal(memberId);
+document.addEventListener('DOMContentLoaded', () => {
+  const cards = document.querySelectorAll('.directiva-card');
+  cards.forEach(card => {
+    card.addEventListener('click', () => {
+      const memberId = parseInt(card.getAttribute('data-member'), 10);
+      openModal(memberId);
+    });
   });
 });
 
 // Modal navigation
-document.getElementById('modalPrev').addEventListener('click', (e) => {
-  e.stopPropagation();
-  if (currentMemberIndex !== null) openModal((currentMemberIndex - 1 + directivaData.length) % directivaData.length);
-});
-
-document.getElementById('modalNext').addEventListener('click', (e) => {
-  e.stopPropagation();
-  if (currentMemberIndex !== null) openModal((currentMemberIndex + 1) % directivaData.length);
+document.addEventListener('DOMContentLoaded', () => {
+  const prevBtn = document.getElementById('modalPrev');
+  const nextBtn = document.getElementById('modalNext');
+  if (prevBtn) prevBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (currentMemberIndex !== null) openModal((currentMemberIndex - 1 + directivaData.length) % directivaData.length);
+  });
+  if (nextBtn) nextBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (currentMemberIndex !== null) openModal((currentMemberIndex + 1) % directivaData.length);
+  });
 });
 
 function openModal(index) {
   currentMemberIndex = index;
   const member = directivaData[index];
 
-  document.getElementById('modalImg').src = member.img;
-  document.getElementById('modalImg').alt = `${member.name} - ${member.role}`;
-  document.getElementById('modalName').textContent = member.name;
-  document.getElementById('modalRole').textContent = member.role;
-
+  const modalImg = document.getElementById('modalImg');
+  const modalName = document.getElementById('modalName');
+  const modalRole = document.getElementById('modalRole');
   const detailsList = document.getElementById('modalDetails');
-  detailsList.innerHTML = member.details.map(detail => `<li>• ${detail}</li>`).join('');
+
+  if (modalImg) modalImg.src = member.img;
+  if (modalImg) modalImg.alt = `${member.name} - ${member.role}`;
+  if (modalName) modalName.textContent = member.name;
+  if (modalRole) modalRole.textContent = member.role;
+  if (detailsList) detailsList.innerHTML = member.details.map(detail => `<li>• ${detail}</li>`).join('');
 
   const modal = document.getElementById('directivaModal');
-  modal.classList.add('active');
+  if (modal) modal.classList.add('active');
   modal.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
-  document.getElementById('modalCloseBtn').focus();
+  const closeBtn = document.getElementById('modalCloseBtn');
+  if (closeBtn) closeBtn.focus();
   
-  // Agregar listeners de swipe al abrir modal
   enableSwipeListeners();
 }
 
@@ -96,14 +147,14 @@ function closeModal() {
   modal.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
   currentMemberIndex = null;
-  
-  // Remover listeners de swipe al cerrar modal
   disableSwipeListeners();
 }
 
-document.getElementById('directivaModal').addEventListener('click', (e) => {
-  if (e.target.id === 'directivaModal') closeModal();
-});
+if (document.getElementById('directivaModal')) {
+  document.getElementById('directivaModal').addEventListener('click', (e) => {
+    if (e.target.id === 'directivaModal') closeModal();
+  });
+}
 
 // Keyboard navigation (Escape to close, Tab trap)
 document.addEventListener('keydown', (e) => {
@@ -113,7 +164,7 @@ document.addEventListener('keydown', (e) => {
   }
 
   const modal = document.getElementById('directivaModal');
-  if (!modal.classList.contains('active')) return;
+  if (!modal || !modal.classList.contains('active')) return;
 
   if (e.key === 'Tab') {
     const focusable = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
@@ -136,24 +187,33 @@ document.addEventListener('keydown', (e) => {
 });
 
 // Image error fallback
-document.getElementById('modalImg').addEventListener('error', function() {
-  this.src = './IMG/image.webp';
+document.addEventListener('DOMContentLoaded', () => {
+  const modalImg = document.getElementById('modalImg');
+  if (modalImg) {
+    modalImg.addEventListener('error', function() {
+      this.src = './IMG/image.webp';
+    });
+  }
 });
 
-// ===== MODAL SWIPE NAVIGATION (HORIZONTAL) =====
-const modal = document.getElementById('directivaModal');
-const modalImg = document.getElementById('modalImg');
+// ===== MODAL SWIPE NAVIGATION =====
 let touchStartX = 0;
 let isSwiping = false;
 
-// Funciones para agregar/remover listeners dinámicamente
 function enableSwipeListeners() {
+  const modal = document.getElementById('directivaModal');
+  if (!modal) return;
+  const modalImg = document.getElementById('modalImg');
+  if (!modalImg) return;
+
   modal.addEventListener('touchstart', handleTouchStart, { passive: true });
   modal.addEventListener('touchmove', handleTouchMove, { passive: false });
   modal.addEventListener('touchend', handleTouchEnd, { passive: true });
 }
 
 function disableSwipeListeners() {
+  const modal = document.getElementById('directivaModal');
+  if (!modal) return;
   modal.removeEventListener('touchstart', handleTouchStart);
   modal.removeEventListener('touchmove', handleTouchMove);
   modal.removeEventListener('touchend', handleTouchEnd);
@@ -168,14 +228,12 @@ function handleTouchMove(e) {
   const currentX = e.changedTouches[0].clientX;
   const swipeDistance = currentX - touchStartX;
   
-  // Solo si el movimiento es significativo hacia los lados
   if (Math.abs(swipeDistance) > 10) {
     isSwiping = true;
-    e.preventDefault(); // Prevenir scroll cuando se detecta swipe horizontal
-    // Animar la imagen durante el swipe
+    e.preventDefault();
     const translatePercent = (swipeDistance / window.innerWidth) * 20;
-    modalImg.style.transform = `translateX(${translatePercent}px) scale(0.95)`;
-    modalImg.style.opacity = '0.8';
+    e.currentTarget.querySelector('.modal-img').style.transform = `translateX(${translatePercent}px) scale(0.95)`;
+    e.currentTarget.querySelector('.modal-img').style.opacity = '0.8';
   }
 }
 
@@ -186,22 +244,16 @@ function handleTouchEnd(e) {
   const swipeDistance = touchStartX - touchEndX;
   const minSwipeDistance = 50;
   
-  // Reset inmediato de la animación
+  const modalImg = e.currentTarget.querySelector('.modal-img');
   modalImg.style.transform = '';
   modalImg.style.opacity = '';
   modalImg.style.transition = 'all 0.3s ease';
   
-  // Detectar swipe HORIZONTAL
-  if (Math.abs(swipeDistance) > minSwipeDistance) {
-    if (currentMemberIndex !== null) {
-      // Swipe IZQUIERDA (swipeDistance > 0) = Siguiente
-      if (swipeDistance > 0) {
-        openModal((currentMemberIndex + 1) % directivaData.length);
-      }
-      // Swipe DERECHA (swipeDistance < 0) = Anterior
-      else {
-        openModal((currentMemberIndex - 1 + directivaData.length) % directivaData.length);
-      }
+  if (Math.abs(swipeDistance) > minSwipeDistance && currentMemberIndex !== null) {
+    if (swipeDistance > 0) {
+      openModal((currentMemberIndex + 1) % directivaData.length);
+    } else {
+      openModal((currentMemberIndex - 1 + directivaData.length) % directivaData.length);
     }
   }
   
@@ -212,9 +264,12 @@ function handleTouchEnd(e) {
 }
 
 // ===== COMISIONES ACCORDION =====
-const commissionsToggle = document.getElementById('commissionsToggle');
-const commissionsCard = commissionsToggle.closest('.commissions-card');
-
-commissionsToggle.addEventListener('click', () => {
-  commissionsCard.classList.toggle('expanded');
+document.addEventListener('DOMContentLoaded', () => {
+  const commissionsToggle = document.getElementById('commissionsToggle');
+  const commissionsCard = document.querySelector('.commissions-card');
+  if (commissionsToggle && commissionsCard) {
+    commissionsToggle.addEventListener('click', () => {
+      commissionsCard.classList.toggle('expanded');
+    });
+  }
 });

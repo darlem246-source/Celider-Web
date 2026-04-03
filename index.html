@@ -8,6 +8,15 @@
 </head>
 <body>
 
+<!-- STICKY NAV -->
+<nav class="sticky-nav" role="navigation" aria-label="Navegación rápida">
+  <a href="#convocatorias" class="nav-link">Convocatorias</a>
+  <a href="#directiva" class="nav-link">Directiva</a>
+  <a href="#secretarios" class="nav-link">Secretarios</a>
+  <a href="#quienes-somos" class="nav-link">¿Quiénes somos?</a>
+  <a href="#comisiones" class="nav-link">Comisiones</a>
+</nav>
+
 <div class="bg-orbs">
   <div class="bg-image"></div>
   <div class="orb orb1"></div>
@@ -66,8 +75,9 @@
   <!-- MAIN GRID -->
   <div class="main-grid full-col">
 
-    <!-- LINKS -->
-    <div style="display:flex;flex-direction:column;gap:10px;" class="full-col">
+    <!-- LINKS - CONV -->
+
+    <div id="convocatorias" style="display:flex;flex-direction:column;gap:10px;" class="full-col">
       <div class="section-title">Convocatorias y redes</div>
       <div class="links-grid">
 
@@ -127,8 +137,8 @@
       </div>
     </div>
 
-    <!-- DIRECTIVA CARD -->
-    <div class="directiva-section full-col">
+    <!-- DIRECTIVA -->
+    <div id="directiva" class="directiva-section full-col">
       <h2>Directiva 2026 - 2027</h2>
       <div class="mobile-tip">Desliza horizontalmente para ver todos los miembros (modo mobile)</div>
       <div class="directiva-grid">
@@ -160,8 +170,31 @@
       </div>
     </div>
 
+    <!-- SECRETARIOS -->
+<div id="secretarios" class="directiva-section full-col">
+      <h2>Secretarios 2026 - 2027</h2>
+      <div class="mobile-tip">Desliza horizontalmente para ver todos los miembros (modo mobile)</div>
+      <div class="directiva-grid">
+        <div class="directiva-card" data-member="5">
+          <img src="./IMG/isaira.webp" alt="Isaira C. Sebastián (Secretaria General)" loading="lazy" onerror="this.src='./IMG/image.webp'">
+          <h3>Isaira C. Sebastián</h3>
+          <p>Secretaria General</p>
+        </div>
+        <div class="directiva-card" data-member="6">
+          <img src="./IMG/franchesca.webp" alt="Franchesca Genao (Secretaria G. Académica)" loading="lazy" onerror="this.src='./IMG/image.webp'">
+          <h3>Franchesca Genao</h3>
+          <p>Secretaria G. Académica</p>
+        </div>
+        <div class="directiva-card" data-member="7">
+          <img src="./IMG/carlos.webp" alt="Carlos Mejía (Secretario G. Logístico)" loading="lazy" onerror="this.src='./IMG/image.webp'">
+          <h3>Carlos Mejía</h3>
+          <p>Secretario G. Logístico</p>
+        </div>
+      </div>
+    </div>
+
     <!-- ABOUT -->
-    <div class="about-card">
+    <div id="quienes-somos" class="about-card">
       <h2><span class="dot"></span>¿Quiénes somos?</h2>
       <p>
         CELIDER 17-02 es el <strong>Club de Liderazgo Educativo</strong> del
@@ -198,8 +231,8 @@
       </ul>
     </div>
 
-    <!-- COMISIONES Y DISTRIBUCIONES -->
-    <div class="commissions-card full-col">
+    <!-- COMISIONES -->
+    <div id="comisiones" class="commissions-card full-col">
       <button class="commissions-toggle" id="commissionsToggle">
         <div class="commission-header">
           <h2>📋 Comisiones y Delegaciones</h2>
@@ -257,6 +290,14 @@
     <ul id="modalDetails"></ul>
   </div>
 </div>
+
+<!-- BACK TO TOP -->
+<button id="backToTop" class="back-to-top" aria-label="Volver arriba">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="12" y1="19" x2="12" y2="5"></line>
+    <polyline points="19 12 12 5 5 12"></polyline>
+  </svg>
+</button>
 
 <script src="./directiva-data.js"></script>
 <script src="./script.js"></script>
